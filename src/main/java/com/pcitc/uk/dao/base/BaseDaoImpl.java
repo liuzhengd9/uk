@@ -16,7 +16,7 @@ import org.springframework.orm.hibernate3.HibernateTemplate;
 public abstract class BaseDaoImpl<T, PK extends Serializable> implements BaseDao<T, PK> {
 
 	@Resource(name = "hibernateTemplate", type = HibernateTemplate.class)
-	private HibernateTemplate hibernateTemplate;
+	protected HibernateTemplate hibernateTemplate;
 
 	public abstract Class<T> getPersistenceClass();
 
