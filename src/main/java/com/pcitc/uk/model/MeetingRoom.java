@@ -27,6 +27,7 @@ public class MeetingRoom extends ParentEntity {
 	private String managerPhone;
 
 	@JsonSerialize(using = JsonNumberSerializer.class)
+	@Column(name = "is_valid")
 	private Boolean isValid;
 
 	@Column(name = "description")

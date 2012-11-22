@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.springframework.aop.framework.AopContext;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,15 +29,15 @@ public class MenuServiceImpl extends BaseServiceImpl<Menu, Integer, MenuDao> imp
 	@Override
 	public List<Menu> findAll() {
 
-		return super.find("from Menu m where m.parentId is null order by m.text asc");
+		return ((MenuService) AopContext.currentProxy()).find("from Menu m where m.parentId is null order by m.text asc");
 	}
 
 	@Override
 	public void drag(int sourceId, int targetId) {
 
-		Menu menu = super.get(sourceId);
+		Menu menu = ((MenuService) AopContext.currentProxy()).get(sourceId);
 		menu.setParentId(targetId == 0 ? null : targetId);
-		super.saveOrUpdate(menu);
+		((MenuService) AopContext.currentProxy()).saveOrUpdate(menu);
 	}
 
 }
