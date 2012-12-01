@@ -35,7 +35,6 @@
 	
 	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
 		<!-- 基本属性 url、user、password -->
-		<property name="driverClassName" value="${db.driverClassName}" />
 		<property name="url" value="${db.url}" />
 		<property name="username" value="${db.username}" />
 		<property name="password" value="${db.password}" />
@@ -59,9 +58,10 @@
 		<property name="testOnBorrow" value="false" />
 		<property name="testOnReturn" value="false" />
 		
-		<!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->
+		<!-- 打开PSCache，并且指定每个连接上PSCache的大小 
 		<property name="poolPreparedStatements" value="false" />
 		<property name="maxPoolPreparedStatementPerConnectionSize" value="20" />
+		-->
 		
 		<!-- 打开removeAbandoned功能 -->
 		<property name="removeAbandoned" value="true" />
@@ -71,7 +71,7 @@
 		<property name="logAbandoned" value="true" />
 		
 		<!-- 配置监控统计拦截的filters -->
-		<property name="filters" value="stat,encoding,commonLogging,log4j,trace" />
+		<property name="filters" value="stat,encoding,commonLogging,log4j" />
 	</bean>
 	
 	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
@@ -95,6 +95,8 @@
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 
+	<aop:aspectj-autoproxy expose-proxy="true" />
+
 	<!-- 通过@Transactional注解定义事务 -->
 	<tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true" />
 
@@ -113,8 +115,6 @@
 			</bean>
 		</property>
 	</bean>
-
-	<aop:aspectj-autoproxy expose-proxy="true" />
 
 	<cache:annotation-driven cache-manager="cacheManager" proxy-target-class="true" />
 
